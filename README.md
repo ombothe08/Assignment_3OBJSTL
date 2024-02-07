@@ -1,4 +1,4 @@
-# Assignment Obj-Stl reader and tranlator
+# Assignment Obj-Stl reader and translator
 
 This repository contains code for four assignments related to reading and converting 3D geometry files:
 
