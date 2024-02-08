@@ -1,9 +1,9 @@
-#include "../headers/STLReader.h"
-#include "../headers/Triangulation.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <map>
+#include "../headers/STLReader.h"
+#include "../headers/Triangulation.h"
 using namespace std;
 using namespace Shapes3D;
 
@@ -14,7 +14,7 @@ STLReader::~STLReader() {}
 // Method to read triangulation data from an STL file and populate a Triangulation object
 Triangulation STLReader::readSTL(const std::string &filePath)
 {
-    Triangulation triangulationObj;
+    Triangulation triangulation;
 
     ifstream file(filePath);
 
@@ -24,8 +24,8 @@ Triangulation STLReader::readSTL(const std::string &filePath)
     }
 
     string line;
-    vector<Point3D> points;
-    vector<Triangle> triangles;
+    // vector<Point3D> points;
+    // vector<Triangle> triangles;
     map<Point3D, int> pointIndexMap;
     int count = 0;
     while (getline(file, line))
@@ -46,9 +46,9 @@ Triangulation STLReader::readSTL(const std::string &filePath)
             if (it == pointIndexMap.end())
             {
                 // If not, add it to the points vector and update the point index map
-                int index = points.size();
+                int index = triangulation.uniquePoints().size();
                 pointIndexMap[point] = index;
-                points.push_back(point);
+                triangulation.uniquePoints().push_back(point);
             }
             else
             {
@@ -57,13 +57,13 @@ Triangulation STLReader::readSTL(const std::string &filePath)
             int index1 = pointIndexMap[point];
             int index2 = pointIndexMap[point];
             int index3 = pointIndexMap[point];
-            triangles.push_back(Triangle(index1, index2, index3));      
+            triangulation.triangles().push_back(Triangle(index1, index2, index3));      
         }
     }
-    // Assign the points and triangles to the Triangulation object
-    triangulationObj.uniquePoints() = points;
-    triangulationObj.triangles() = triangles;
+    // // Assign the points and triangles to the Triangulation object
+    // triangulation.uniquePoints() = points;
+    // triangulation.triangles() = triangles;
 
      // Return the Triangulation object
-    return triangulationObj;
+    return triangulation;
 }

@@ -1,8 +1,7 @@
 #pragma once
-#include "Triangulation.h"
 #include <string>
 #include <vector>
-
+#include "Triangulation.h"
 namespace Shapes3D
 {
     // Class for reading triangulation data from STL files

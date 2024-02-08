@@ -2,35 +2,35 @@
 using namespace Shapes3D;
 
 Triangle::Triangle() {}
-Triangle::Triangle(const int ind1, const int ind2, const int ind3) : mIndex1(ind1), mIndex2(ind2), mIndex3(ind3) {}
+Triangle::Triangle(const int inIndexFirst, const int inIndexSecond, const int inIndexThird) : mIndexOne(inIndexFirst), mIndexTwo(inIndexSecond), mIndexThree(inIndexThird) {}
 Triangle::~Triangle() {}
 
-int Triangle::index1() const
+int Triangle::indexOne() const
 {
-    return mIndex1;
+    return mIndexOne;
 }
 
-int Triangle::index2() const
+int Triangle::indexTwo() const
 {
-    return mIndex2;
+    return mIndexTwo;
 }
 
-int Triangle::index3() const
+int Triangle::indexThree() const
 {
-    return mIndex3;
+    return mIndexThree;
 }
 
-void Triangle::setindex1(int index1)
+void Triangle::setindexOne(int index1)
 {
-    mIndex1 = index1;
+    mIndexOne = index1;
 }
 
-void Triangle::setindex2(int index2)
+void Triangle::setindexTwo(int index2)
 {
-    mIndex2 = index2;
+    mIndexTwo = index2;
 }
 
-void Triangle::setindex3(int index3)
+void Triangle::setindexThree(int index3)
 {
-    mIndex3 = index3;
+    mIndexThree = index3;
 }

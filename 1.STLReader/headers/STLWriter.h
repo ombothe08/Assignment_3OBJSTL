@@ -1,7 +1,6 @@
 #pragma once
-#include "../headers/Triangulation.h"
 #include <string>
-
+#include "../headers/Triangulation.h"
 namespace Shapes3D
 {
     class STLWriter

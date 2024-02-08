@@ -1,6 +1,6 @@
-#include "../headers/STLWriter.h"
 #include <iostream>
 #include <fstream>
+#include "../headers/STLWriter.h"
 using namespace std;
 using namespace Shapes3D;
 
@@ -24,8 +24,7 @@ Triangulation STLWriter::writeSTL(std::string &filePath, Triangulation &triangul
     // Write the triangulation data to the file
     for (const Triangle &triangle : triangles)
     {
-        // Write the coordinates of each point in the triangle to the file
-        outFile << points[triangle.index1()].x() << " " << points[triangle.index1()].y() << " " << points[triangle.index1()].z() << endl;
+        outFile << points[triangle.indexOne()].x() << " " << points[triangle.indexTwo()].y() << " " << points[triangle.indexThree()].z() << endl;
     }
     outFile.close();
     return triangulationObj;

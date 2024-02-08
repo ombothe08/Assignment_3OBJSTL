@@ -5,8 +5,8 @@ class Triangle
 {
 public:
     Triangle();
-    Triangle(Point3D p1, Point3D p2, Point3D p3);
-    Triangle(int v1,int v2 ,int v3);
+    Triangle(Point3D inP1, Point3D inP2, Point3D inP3);
+    Triangle(int inV1,int inV2 ,int inV3,int inNormal);
     ~Triangle();
 
     Point3D pointP1();
@@ -20,11 +20,13 @@ public:
     const int v1() const;
     const int v2() const;
     const int v3() const;
+    const int n() const;
 
 private:
     int mV1;
     int mV2;
     int mV3;
+    int mNormal;
     Point3D mPointP1;
     Point3D mPointP2;
     Point3D mPointP3;

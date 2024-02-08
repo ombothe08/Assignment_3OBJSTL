@@ -1,13 +1,14 @@
 #include <cmath>
-#include <vector>
-#include <fstream>
-#include <sstream>
 #include <iostream>
+#include <fstream>
 #include <map>
+#include <vector>
+#include <sstream>
 #include "../headers/Point3D.h"
 #include "../headers/StlReader.h"
 #include "../headers/Triangle.h"
 #include "../headers/Triangulation.h"
+
 using namespace std;
 
 StlReader ::StlReader()
@@ -16,81 +17,88 @@ StlReader ::StlReader()
 StlReader ::~StlReader()
 {
 }
-// Method to read triangulation data from an STL file and populate a Triangulation object
+
 void StlReader ::readFile1(Triangulation &triangualtion)
 {
     std::ifstream readFromFile("stlfile\\cube.stl");
-    vector<Triangle> vertexData;
-    vector<Point3D> points;
-    vector<Point3D>different;
-    map<Point3D,int>mp;
+    map<Point3D, int> mp;
+    map<Point3D, int> mappedNormals;
     string line;
-    vector<Triangle>tri;
 
-    if (readFromFile.is_open() )
+    if (readFromFile.is_open())
     {
-        int count=1;
+        int count = 1;
+        int normalIndex = 1;
         int v1;
         int v2;
         int v3;
+        int Normal;
         while (getline(readFromFile, line))
         {
-            // Check if the line contains vertex data
-            if (line.find("vertex") != std::string::npos)
+            if (line.find("facet normal") != std::string::npos)
             {
+                double x;
+                double y;
+                double z;
                 istringstream iss(line);
-                string keyword;
-                double x, y, z; 
-                
-                iss >> keyword >> x >> y >> z;
-               
+                string token1;
+                string token2;
+                iss >> token1 >> token2 >> x >> y >> z;
                 Point3D point(x, y, z);
-                auto it =mp.find(point);
 
-                // If the point is not found in the map, add it to the list of unique points
-                if(it == mp.end())
+                // Check if the point is already mapped
+                auto iterator = mappedNormals.find(point);
+
+                // If not mapped, add to uniquePoints and update the mapping
+                if (iterator == mappedNormals.end())
                 {
-                    different.push_back(point);
-                    
-                    mp[point] = different.size();
+                    mappedNormals[point] = triangualtion.uniqueNormals().size();
+                    triangualtion.uniqueNormals().push_back(point);
                 }
-                // Determine the vertex indices based on the count
-                if (count ==1)
+                normalIndex = mappedNormals[point];
+            }
+
+            if (line.find("vertex") != string::npos)
+            {
+                istringstream vertexStream(line);
+                string token;
+                double x, y, z;
+
+                vertexStream >> token >> x >> y >> z;
+                // Stored Coordinates x,y,z into object of Point3D
+                Point3D point(x, y, z);
+
+                auto it = mp.find(point);
+
+                if (it == mp.end())
                 {
-                    v1=mp[point];
+                    triangualtion.uniquePoints().push_back(point);
+
+                    mp[point] = triangualtion.uniquePoints().size();
+                }
+                if (count == 1)
+                {
+                    v1 = mp[point];
                     count++;
                 }
-                else if(count ==2)
+                else if (count == 2)
                 {
-                    v2=mp[point];
+                    v2 = mp[point];
                     count++;
                 }
-                else if (count ==3)
+                else if (count == 3)
                 {
-                    
-                    v3=mp[point];
+                    v3 = mp[point];
                     count++;
                 }
-
-                points.push_back(point);
-                if(count==4)
-                {   
-
-                    Triangle T(v1,v2,v3);
-                    tri.push_back(T);
-                    count=1;
-                }  
+            }
+            if (count == 4)
+            {
+                Triangle T(v1, v2, v3, normalIndex);
+                triangualtion.triangles().push_back(T);
+                count = 1;
             }
         }
-        cout<<"uniquepints size - "<< different .size ()<<endl;
-        cout<<"points size - "<<points.size()<<endl;
-        cout<<tri.size()<<endl;
-        triangualtion.triangles() = tri;
-        triangualtion.uniquePoints() = different;
         readFromFile.close();
-    }
-    else
-    {
-        std::cerr << "Error while opening files" << std::endl;
     }
 }

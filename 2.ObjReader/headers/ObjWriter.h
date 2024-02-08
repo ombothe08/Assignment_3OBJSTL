@@ -7,5 +7,5 @@
 class ObjWriter
 {
 public:
-    void writeOBJ(Triangulation &triangulation);
+    void writeObj(Triangulation &triangulation);
 };

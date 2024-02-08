@@ -1,6 +1,6 @@
 #pragma once
-#include "Triangle.h"
 #include <vector>
+#include "Triangle.h"
 using namespace std;
 
 namespace Shapes3D
@@ -16,7 +16,7 @@ namespace Shapes3D
         vector<Triangle> &triangles();
 
     private:
-        vector<Point3D> mUniquePoints;  // Vector storing unique points
-        vector<Triangle> mTriangles;    //// Vector storing triangles
+        vector<Point3D> mUniquePoints;  
+        vector<Triangle> mTriangles;    
     };
 }

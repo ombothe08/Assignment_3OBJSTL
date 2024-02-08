@@ -1,61 +1,120 @@
-#include "../headers/ObjReader.h"
-#include "../headers/Triangulation.h"
-#include "../headers/Triangle.h"
-#include <iostream>
 #include <fstream>
-#include <sstream>
-#include <unordered_map>
+#include <iostream>
 #include <map>
-#include <algorithm>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include "../headers/ObjReader.h"
+#include "../headers/Triangle.h"
+#include "../headers/Triangulation.h"
+
 using namespace std;
 
-// Method to read triangulation data from an OBJ file and populate a Triangulation object
+ObjReader ::ObjReader()
+{
+}
+ObjReader ::~ObjReader()
+{
+}
 void ObjReader::readObj(Triangulation &triangulation)
 {
-    vector<Point3D> points;
-    vector<Triangle> triangles;
     ifstream inputfile("objfile\\cube.obj");
     string line;
 
     while (getline(inputfile, line))
     {
+        // checking if v is present in line string
         if (line.find("v") != string::npos)
         {
             double x, y, z;
-            istringstream singleline(line);
-            string keyword;
-            singleline >> keyword >> x >> y >> z;
-            // If the keyword is "v", create a Point3D object and add it to the points vector
-            if (keyword == "v")
+            istringstream vertexStream(line);
+            string token;
+            vertexStream >> token >> x >> y >> z;
+            // checking if v is present in Keyword string
+            if (token == "v")
             {
                 Point3D P1(x, y, z);
-                points.push_back(P1);
+                triangulation.uniquePoints().push_back(P1);
             }
         }
 
+        if (line.find("vn") != string ::npos)
+        {
+            double x, y, z;
+            istringstream vertexNormal(line);
+            string token;
+
+            vertexNormal >> token >> x >> y >> z;
+            if (token == "vn")
+            {
+                Point3D Vn(x, y, z);
+
+                triangulation.uniqueNormals().push_back(Vn);
+            }
+        }
+
+        // checking if f is present in line String
         if (line.find("f") != string::npos)
         {
             string x, y, z;
-            istringstream singleLine(line);
-            string keyword;
-            singleLine >> keyword >> x >> y >> z;
-            // If the keyword is "f", extract vertex indices and create a Triangle object
-            if (keyword == "f")
+            istringstream facetline(line);
+            string token;
+            facetline >> token >> x >> y >> z;
+
+            // checking if f is present in Keyword String
+            int v1;
+            int v2;
+            int v3;
+            if (token == "f")
             {
-                int v1, v2, v3;
-                v1 = x[0];
-                v1 -= 48;
-                v2 = y[0];
-                v2 -= 48;
-                v3 = z[0];
-                v3 -= 48;
-                Triangle T(v1, v2, v3);
-                triangles.push_back(T);
+                for (int i = 0; i < x.size(); i++)
+                {
+                    if (x[i] == '/' && i > 0)
+                    {
+
+                        v1 = stoi(x.substr(0, i));
+                        break;
+                    }
+                }
+                for (int i = 0; i < y.size(); i++)
+                {
+                    if (y[i] == '/' && i > 0)
+                    {
+
+                        v2 = stoi(y.substr(0, i));
+                        break;
+                    }
+                }
+                for (int i = 0; i < z.size(); i++)
+                {
+                    if (z[i] == '/' && i > 0)
+                    {
+
+                        v3 = stoi(z.substr(0, i));
+                        break;
+                    }
+                }
+            }
+
+            if (token == "f")
+            {
+                int vn1;
+
+                for (int i = x.size(); i > 0; i--)
+                {
+                    if (x[i] == '/')
+                    {
+                        vn1 = stoi(x.substr(i + 1, x.size() - i - 1));
+
+                        break;
+                    }
+                }
+
+                Triangle T2(v1 - 1, v2 - 1, v3 - 1, vn1 - 1);
+                triangulation.triangles().push_back(T2);
             }
         }
     }
-    // Assign the triangles and points to the Triangulation object
-    triangulation.triangles() = triangles;
-    triangulation.uniquePoints() = points;
+
     inputfile.close();
 }

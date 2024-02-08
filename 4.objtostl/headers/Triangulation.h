@@ -12,9 +12,10 @@ public:
 
     vector<Triangle> &triangles();
     vector<Point3D> &uniquePoints();
-    void printtriangles();
+    vector<Point3D> &uniqueNormals();
 
 private:
     vector<Triangle> mTriangles;
     vector<Point3D> mUniquePoints;
+    vector<Point3D> mUniqueNormals;
 };

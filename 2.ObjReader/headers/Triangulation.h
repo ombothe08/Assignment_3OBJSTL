@@ -7,19 +7,14 @@
 class Triangulation
 {
 public:
-    Triangulation();  // Default constructor
-    ~Triangulation();  // Destructor
+    Triangulation();
+    ~Triangulation();
 
-    // Getter method for triangles
     std::vector<Triangle> &triangles();
 
-    // Getter method for unique points
     std::vector<Point3D> &uniquePoints();
 
-    // Method to print triangles
-    void printTriangles();
-
 private:
-    std::vector<Triangle> mTriangles;  // Vector of triangles
-    std::vector<Point3D> mUniquePoints;  // Vector of unique points
+    std::vector<Triangle> mTriangles;
+    std::vector<Point3D> mUniquePoints;
 };

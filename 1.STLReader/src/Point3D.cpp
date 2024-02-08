@@ -1,8 +1,8 @@
 #include "../headers/Point3D.h"
-using namespace Shapes3D;
+
 
 Point3D::Point3D() : mX(), mY(), mZ() {}
-Point3D::Point3D(double x, double y, double z) : mX(x), mY(y), mZ(z) {}
+Point3D::Point3D(double inX, double inY, double inZ) : mX(inX), mY(inY), mZ(inZ) {}
 Point3D::~Point3D() {}
 
 double Point3D::x() const

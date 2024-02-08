@@ -7,20 +7,20 @@ namespace Shapes3D
     {
     public:
         Triangle();
-        Triangle(const int ind1, const int ind2, const int ind3);
+        Triangle(const int inIndexFirst, const int inIndexsecond, const int inIndexthird);
         ~Triangle();
 
-        int index1() const;
-        int index2() const;
-        int index3() const;
+        int indexOne() const;
+        int indexTwo() const;
+        int indexThree() const;
 
-        void setindex1(int ind1);
-        void setindex2(int ind2);
-        void setindex3(int ind3);
+        void setindexOne(int indexFirst);
+        void setindexTwo(int indexSecond);
+        void setindexThree(int indexThird);
 
     private:
-        int mIndex1;
-        int mIndex2;
-        int mIndex3;
+        int mIndexOne;
+        int mIndexTwo;
+        int mIndexThree;
     };
 }

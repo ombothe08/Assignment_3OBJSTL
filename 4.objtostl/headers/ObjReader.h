@@ -1,8 +1,10 @@
 #pragma once
 #include "Triangulation.h"
-// Class for reading triangulation data from an OBJ file
+
 class ObjReader
 {
 public:
+    ObjReader();
+    ~ObjReader();
     void readObj(Triangulation &triangulation);
 };

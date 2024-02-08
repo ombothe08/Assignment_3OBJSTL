@@ -4,7 +4,7 @@ class Point3D
 {
 public:
     Point3D();
-    Point3D(float x, float y, float z);
+    Point3D(float inX, float inY, float inZ);
     ~Point3D();
 
     float x();

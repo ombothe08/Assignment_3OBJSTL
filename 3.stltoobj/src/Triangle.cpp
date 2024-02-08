@@ -1,4 +1,3 @@
-
 #include "../headers/Triangle.h"
 
 using namespace std;
@@ -6,12 +5,13 @@ using namespace std;
 Triangle ::Triangle()
 {
 }
-Triangle ::Triangle(Point3D p1, Point3D p2, Point3D p3)
+Triangle ::Triangle(Point3D inP1, Point3D inP2, Point3D inP3)
 {
-    mPointP1 = p1;
-    mPointP2 = p2;
-    mPointP3 = p3;
+    mPointP1 = inP1;
+    mPointP2 = inP1;
+    mPointP3 = inP1;
 }
+
 Triangle ::~Triangle()
 {
 }
@@ -57,9 +57,14 @@ const int Triangle ::v3() const
     return mV3;
 }
 
-Triangle ::Triangle(int v1, int v2, int v3)
+const int Triangle ::n() const
+{
+    return mNormal;
+}
+Triangle ::Triangle(int v1, int v2, int v3, int normal)
 {
     mV1 = v1;
     mV2 = v2;
     mV3 = v3;
+    mNormal = normal;
 }

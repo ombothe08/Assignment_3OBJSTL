@@ -1,33 +1,44 @@
-#include "../headers/StlToObj.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <vector>
+#include "../headers/StlToObj.h"
 #include "../headers/Point3D.h"
 using namespace std;
 
 // Method to write triangulation data to an OBJ file
-void StlToObj :: writer(Triangulation &triangulation)
-{  
+void StlToObj ::writer(Triangulation &triangulation)
+{
     ofstream outFile("objfile//cube.obj");
     if (!outFile.is_open())
     {
         cout << "Error while opening text file." << endl;
         return;
     }
-    // Write the vertices to the OBJ file
+
     vector<Point3D> &points = triangulation.uniquePoints();
-    for (size_t i = 0; i < points.size(); i++)
-    {
-        outFile<<"v"<<" "<<points[i].x()<<" " << points[i].y() << " " << points[i].z() << endl;
-    }
-    // Write the faces to the OBJ file
+    vector<Point3D> &normal = triangulation.uniqueNormals();
     vector<Triangle> &triangles = triangulation.triangles();
-    cout<<triangulation.triangles().size();
-    int countVertex=1;
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        outFile << "v"
+                << " " << points[i].x() << " " << points[i].y() << " " << points[i].z() << endl;
+    }
+
+    // Writing facet into Obj File from Triangles Vector
+    for (int i = 0; i < normal.size(); i++)
+    {
+        outFile << "vn"
+                << " " << normal[i].x() << " " << normal[i].y() << " " << normal[i].z() << endl;
+    }
+
     for (const Triangle &triangle : triangles)
-    {  
-        outFile << "f" << " "<< triangle.v1()<<"/_/_"<<" "<<triangle.v2()<<"/_/_"<<" "<<triangle.v3()<<"/_/_"<<endl;
+    {
+        outFile << "f"
+                << " " << triangle.v1() << "/ /" << triangle.n() + 1
+                << " " << triangle.v2() << "/ /" << triangle.n() + 1
+                << " " << triangle.v3() << "/ /" << triangle.n() + 1 << endl;
     }
     outFile.close();
 }
