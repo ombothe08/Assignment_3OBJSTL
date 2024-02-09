@@ -24,7 +24,7 @@ void ObjReader::readObj(Triangulation &triangulation)
             singleline >> keyword >> x >> y >> z;
             if (keyword == "v")
             {
-                Point3D P1(x, y, z); // Create Point3D object
+                Point3D P1(x, y, z);
                 triangulation.uniquePoints().push_back(P1);
             }
         }
@@ -51,10 +51,10 @@ void ObjReader::readObj(Triangulation &triangulation)
                     }
                 }
 
-                // Extract first values
                 int v1 = vertices[0];
                 int v2 = vertices[3];
                 int v3 = vertices[6];
+                cout<<v1 <<" "<<v2<< " "<<v3<< " "<<endl;
 
                 Triangle T(v1, v2, v3);
                 triangulation.triangles().push_back(T);

@@ -24,8 +24,6 @@ Triangulation STLReader::readSTL(const std::string &filePath)
     }
 
     string line;
-    // vector<Point3D> points;
-    // vector<Triangle> triangles;
     map<Point3D, int> pointIndexMap;
     int count = 0;
     while (getline(file, line))
@@ -57,13 +55,8 @@ Triangulation STLReader::readSTL(const std::string &filePath)
             int index1 = pointIndexMap[point];
             int index2 = pointIndexMap[point];
             int index3 = pointIndexMap[point];
-            triangulation.triangles().push_back(Triangle(index1, index2, index3));      
+            triangulation.triangles().push_back(Triangle(index1, index2, index3));
         }
     }
-    // // Assign the points and triangles to the Triangulation object
-    // triangulation.uniquePoints() = points;
-    // triangulation.triangles() = triangles;
-
-     // Return the Triangulation object
     return triangulation;
 }
